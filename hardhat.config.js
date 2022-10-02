@@ -8,7 +8,7 @@ module.exports = {
   networks: {
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/40c2813049e44ec79cb4d7e0d18de173",
-      accounts: ['0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c28b4ee0']
+      accounts: ['0xea6c44ac03bff858b476bba40716402b03e41b8e97e276d1baec7c37d42484a0']
     }
   },
   etherscan: {
