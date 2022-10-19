@@ -1,15 +1,20 @@
 require("@nomicfoundation/hardhat-toolbox");
-require('@nomiclabs/hardhat-waffle');
+require("@nomicfoundation/hardhat-chai-matchers");
 require("@nomiclabs/hardhat-etherscan")
 require("solidity-coverage");
+require("dotenv").config();
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  defaultNetwork: "rinkeby",
+  defaultNetwork: "goerli",
   networks: {
-    rinkeby: {
-      url: "https://rinkeby.infura.io/v3/40c2813049e44ec79cb4d7e0d18de173",
-      accounts: ['0xea6c44ac03bff858b476bba40716402b03e41b8e97e276d1baec7c37d42484a0']
-    }
+    localhost: {
+      url: "http://127.0.0.1:8545/",
+      accounts: [process.env.PRIVATE_KEY]
+    },
+    goerli: {
+      url: "https://eth-goerli.g.alchemy.com/v2/cSdN5NKZvLG6YDW9cXYHf_oKbeUywY7_",
+      accounts: [process.env.PRIVATE_KEY],
+  },
   },
   etherscan: {
     // Your API key for Etherscan

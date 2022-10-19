@@ -13,7 +13,7 @@ async function deployElectionContract() {
     console.log('Waiting for USElection deployment...');
     await usElectionContract.deployed();
     console.log('USElection Contract address: ', usElectionContract.address);
-    const transactionReceipt = await contract.deployTransaction.wait(1); // wait 1 block and then verify
+    // await contract.deployTransaction.wait(1); // wait 1 block and then verify
     await hre.run("verify:verify", {
         address: usElectionContract.address,
         constructorArguments: [
