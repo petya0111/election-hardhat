@@ -48,5 +48,11 @@ describe("USElection", function () {
         expect(await usElection.electionEnded()).to.equal(true); // Ended
     });
 
+    it("get seats", async function () {
+        const endElectionTx = await usElection.getPresidentSeats(3);
+        
+        console.log(endElectionTx);
+    });
+
     
 });
