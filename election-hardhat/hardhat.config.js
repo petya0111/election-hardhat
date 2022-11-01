@@ -12,7 +12,7 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY]
     },
     goerli: {
-      url: "https://eth-goerli.g.alchemy.com/v2/cSdN5NKZvLG6YDW9cXYHf_oKbeUywY7_",
+      url: "https://eth-goerli.g.alchemy.com/v2/p4DXFRf_9xJv9flg-FhVxxit8yPj9Ev5",
       accounts: [process.env.PRIVATE_KEY],
   },
   },
