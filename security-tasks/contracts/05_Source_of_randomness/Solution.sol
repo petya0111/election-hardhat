@@ -67,6 +67,13 @@ contract GuessTheRandomNumber is VRFConsumerBaseV2, KeeperCompatibleInterface {
     }
 
     function guess(uint _guess) public payable {
+        randomNumberRevealed = i_vrfCoordinator.requestRandomWords(
+            gasLane,
+            subscriptionId,
+            REQUEST_CONFIRMATIONS,
+            callbackGasLimit,
+            10
+        );
         uint answer = randomNumberRevealed;
 
         if (_guess == answer) {
